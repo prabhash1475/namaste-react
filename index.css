@@ -1,6 +1,12 @@
 * {
   font-family: arial, "Helvetica Neue", sans-serif;
 }
+.filter {
+  margin: 10px;
+}
+.filter-btn {
+  padding: 5px;
+}
 
 .header {
   display: flex;
