@@ -1,32 +1,29 @@
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
+import { MENU_API_KFC } from "../utils/common";
 
 const RestaurantMenu = () => {
   const [resInfo, setResInfo] = useState(null);
-  const restaurantId = useParams();
-  console.log(restaurantId);
+  const { resId } = useParams();
+  // resId is an object so we have to destructure on the fly
+
   useEffect(() => {
     fetchMenu();
   }, []);
 
   const fetchMenu = async () => {
     const data = await fetch(
-      //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=920809&catalog_qa=undefined&submitAction=ENTER" //KFC
-
-      "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=430964&catalog_qa=undefined&submitAction=ENTER" // pzza hut
+      MENU_API_KFC + resId
+      //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=920809&catalog_qa=undefined&submitAction=ENTER"
+      //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=920809&catalog_qa=undefined&submitAction=ENTER" //KFC OLD
+      //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=460653&catalog_qa=undefined&submitAction=ENTER"
+      //   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=22.5743545&lng=88.3628734&restaurantId=430964&catalog_qa=undefined&submitAction=ENTER" // pzza hut
     );
     const json = await data.json();
+
     setResInfo(json?.data);
-
-    // console.log(json?.data?.cards[2]?.card?.card?.info);
-
-    // console.log(resInfo?.cards[2]?.card?.card?.info);
-
-    // let { name } = resInfo?.cards[2]?.card?.card?.info;
-    // console.log(name);
   };
-  //   console.log(resInfo);
 
   //   showing shimmer UI if restaurant info in null
   if (resInfo == null) {
@@ -40,51 +37,52 @@ const RestaurantMenu = () => {
     cloudinaryImageId,
     cuisines,
   } = resInfo?.cards[2]?.card?.card?.info;
+  console.log(cuisines.join(","));
+  console.log(
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
+      ?.itemCards
+  );
 
-  //   console.log(
-  //     name,
-  //     avgRatingString,
-  //     cloudinaryImageId,
-  //     cuisines,
-  //     costForTwoMessage
-  //   );
+  //   let recommendedMenu =
+  //     resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
+  //       ?.itemCards[1]?.card?.info?.name;
 
-  let recommendedMenu =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
-      ?.itemCards[1]?.card?.info?.name;
+  let title =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
+      ?.title;
+
+  //   console.log(recommendedMenu.title);
 
   let recommendedMenuList =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
       ?.itemCards;
 
-  // resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-
-  console.log(recommendedMenu);
-  let subHeading =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
-
-  let subHeading2 =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card;
+  let title2 =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[3]?.card?.card
+      ?.title;
   let subHeading2List =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2]?.card?.card
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[3]?.card?.card
       ?.itemCards;
 
   return (
     <div className="menu">
-      <div>
+      <div style={{ textTransform: "uppercase" }}>
         <h1>{name}</h1>
-        <p>{cuisines}</p>
+        <p>{cuisines.join(", ")}</p>
         <p>{costForTwoMessage}</p>
-        <p>{avgRatingString}</p>
+        <p>{avgRatingString} ★</p>
       </div>
 
-      <h2>Menu</h2>
+      <h2>Cuisines</h2>
       <ul>
         {cuisines.map((elem, index) => (
           <li key={index}>{elem}</li>
         ))}
       </ul>
-      <h3>{subHeading.title}</h3>
+      <h3>
+        {title} ({recommendedMenuList.length})
+      </h3>
+
       <ul>
         {recommendedMenuList.map((elem, index) => (
           <li key={index}>
@@ -93,7 +91,8 @@ const RestaurantMenu = () => {
           </li>
         ))}
       </ul>
-      <h3>{subHeading2.title}</h3>
+      <h3>{title2}</h3>
+
       <ul>
         {subHeading2List.map((elem) => (
           <li key={elem?.card?.info?.id}>

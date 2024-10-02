@@ -26,7 +26,7 @@ const Header = () => {
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/restaurant/2">
+            <Link to="/rest:resId">
               <img
                 style={{ width: "25px" }}
                 src="https://www.i2clipart.com/cliparts/f/b/e/5/clipart-heart-fbe5.png"
