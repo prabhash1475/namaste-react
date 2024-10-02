@@ -3,12 +3,14 @@ const RestaurantCard = (props) => {
   //   console.log(props);
 
   const { resData } = props;
-  // console.log(resData);
+  //   deliveryTime is not working
+  //   console.log(resData?.info.sla.deliveryTime);
   const {
     name,
     cuisines,
     costForTwo,
     avgRatingString,
+    sla,
     deliveryTime,
     cloudinaryImageId,
   } = resData?.info;
@@ -17,10 +19,7 @@ const RestaurantCard = (props) => {
   // time in our tags it will look good
 
   return (
-    <div
-      className="restaurant-card"
-      style={{ backgroundColor: "#e0ffcd", padding: "10px" }}
-    >
+    <div className="restaurant-card">
       <img
         className="restaurant-logo"
         src={CDN_URL + cloudinaryImageId}
@@ -28,10 +27,22 @@ const RestaurantCard = (props) => {
       />
       {/* [*] */}
       <h3>{name}</h3>
-      <h5>{cuisines.join(", ")}</h5>
-      <h5>{costForTwo}</h5>
-      <h5>{avgRatingString}star</h5>
-      <h5>{deliveryTime} Minuets</h5>
+      <h5 className="cuisines">{cuisines.join(", ")}</h5>
+      <div className="flex">
+        <h5>{costForTwo}</h5>
+        <h5
+          style={{
+            backgroundColor: "green",
+            color: "white",
+            padding: "6px",
+            borderRadius: "10%",
+          }}
+        >
+          {avgRatingString} ★
+        </h5>
+      </div>
+
+      <h5 style={{ textAlign: "end" }}>{sla.slaString} </h5>
     </div>
   );
 };

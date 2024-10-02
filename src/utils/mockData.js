@@ -7,7 +7,7 @@ const resList = [
         "RX_THUMBNAIL/IMAGES/VENDOR/2024/4/17/1a170357-6a8a-4f7e-a1ca-18f56d041eb5_383830.JPG",
       locality: "Rajdanga Main Road",
       areaName: "Acropolis Mall",
-      costForTwo: "₹400 for two",
+      costForTwo: "₹69 for two",
       cuisines: ["Burgers", "Fast Food", "Rolls & Wraps"],
       avgRating: 4.6,
       parentId: "547",
