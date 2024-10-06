@@ -26,7 +26,7 @@ const RestaurantCard = (props) => {
         alt="res-img"
       />
       {/* [*] */}
-      <h3>{name}</h3>
+      <h3 className="res-name">{name}</h3>
       <h5 className="cuisines">{cuisines.join(", ")}</h5>
       <div className="flex">
         <h5>{costForTwo}</h5>

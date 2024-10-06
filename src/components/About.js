@@ -1,12 +1,23 @@
-import React from 'react'
+import React from "react";
+import UserClass from "./UserClasse";
 
-const About = () => {
-  return (
-    <div>
-        <h1>About Us</h1>
-        <h2>Namaste React</h2>
-    </div>
-  )
+class About extends React.Component {
+  constructor() {
+    super();
+
+    console.log("Parent Constructor");
+  }
+  componentDidMount() {
+    console.log("Parent CDM");
+  }
+  render() {
+    console.log("Parent Render");
+    return (
+      <div>
+        <h1>About Us </h1>
+        <UserClass />;
+      </div>
+    );
+  }
 }
-
-export default About
+export default About;

@@ -18,7 +18,7 @@ const Body = () => {
       "https://www.swiggy.com/dapi/restaurants/list/v5?lat=22.51800&lng=88.38320&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
     const json = await data.json();
-    // console.log(json);
+    console.log(json);
 
     // console.log(
     //   json.data.cards[1].card.card.gridElements.infoWithStyle.restaurants
@@ -30,14 +30,14 @@ const Body = () => {
     setListOfFilterRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    // console.log(restaurant.info.id);
+   
   };
-  console.log(listOfRestaurants?.info?.id);
+
 
   // if (listOfRestaurants.length == 0) {
   //   return <Shimmer />;
   // }
-  console.log(listOfFilterRestaurants);
+ 
   let totalOnlineRes = listOfFilterRestaurants.length;
 
   return listOfRestaurants == 0 ? (
@@ -87,8 +87,12 @@ const Body = () => {
       </div>
       <div className="restaurant-container">
         {listOfFilterRestaurants.map((restaurant) => (
-          <Link to={"rest/" + restaurant.info.id}>
-            <RestaurantCard key={restaurant.info.id} resData={restaurant} />
+          <Link
+            key={restaurant.info.id}
+            className="link"
+            to={"rest/" + restaurant.info.id}
+          >
+            <RestaurantCard resData={restaurant} />
           </Link>
         ))}
       </div>
