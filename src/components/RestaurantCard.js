@@ -1,48 +1,35 @@
 import { CDN_URL } from "../utils/common";
-const RestaurantCard = (props) => {
-  //   console.log(props);
 
+const RestaurantCard = (props) => {
   const { resData } = props;
-  //   deliveryTime is not working
-  //   console.log(resData?.info.sla.deliveryTime);
+
   const {
     name,
     cuisines,
     costForTwo,
     avgRatingString,
     sla,
-    deliveryTime,
     cloudinaryImageId,
   } = resData?.info;
 
-  // ^ Above this we are destructure our data so the we do not have to write [*] multiple
-  // time in our tags it will look good
-
   return (
-    <div className="restaurant-card">
+    <div className="bg-white shadow-lg rounded-lg p-4 w-64 mx-auto hover:shadow-2xl hover:bg-orange-200 transition-shadow duration-300">
       <img
-        className="restaurant-logo"
+        className="w-full h-40 object-cover rounded-md"
         src={CDN_URL + cloudinaryImageId}
-        alt="res-img"
+        alt={name}
       />
-      {/* [*] */}
-      <h3 className="res-name">{name}</h3>
-      <h5 className="cuisines">{cuisines.join(", ")}</h5>
-      <div className="flex">
-        <h5>{costForTwo}</h5>
-        <h5
-          style={{
-            backgroundColor: "green",
-            color: "white",
-            padding: "6px",
-            borderRadius: "10%",
-          }}
-        >
+      <h3 className="text-lg font-semibold mt-3">{name}</h3>
+      <h5 className="text-sm text-gray-600 mt-1">{cuisines.join(", ")}</h5>
+
+      <div className="flex justify-between items-center mt-2">
+        <h5 className="text-sm text-gray-700">{costForTwo}</h5>
+        <h5 className="bg-green-500 text-white px-2 py-1 rounded-lg text-sm">
           {avgRatingString} ★
         </h5>
       </div>
 
-      <h5 style={{ textAlign: "end" }}>{sla.slaString} </h5>
+      <h5 className="text-right text-sm text-gray-500 mt-2">{sla.slaString}</h5>
     </div>
   );
 };

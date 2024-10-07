@@ -13,9 +13,9 @@ class About extends React.Component {
   render() {
     console.log("Parent Render");
     return (
-      <div>
+      <div className="mt-20 px-6">
         <h1>About Us </h1>
-        <UserClass />;
+        <UserClass />
       </div>
     );
   }
